@@ -1,0 +1,368 @@
+/* ────────────────────────────────────────────────────────────────────────────
+   OrdersPage.css  —  ElecStore Orders History
+   ──────────────────────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+.od-page {
+  --od-bg:      #09090f;
+  --od-surface: #12121c;
+  --od-surface2:#1a1a28;
+  --od-border:  rgba(255,255,255,0.07);
+  --od-text:    #e2e4ef;
+  --od-muted:   #7a7d9c;
+  --od-accent:  #7c3aed;
+  --od-accent2: #a855f7;
+  --od-title:   #ffffff;
+  
+  --od-green:   #10b981;
+  --od-blue:    #3b82f6;
+  --od-red:     #ef4444;
+  --od-yellow:  #f59e0b;
+
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--od-bg);
+  color: var(--od-text);
+  min-height: 100vh;
+  padding: 40px 0 80px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.light-mode .od-page {
+  --od-bg:      #f8fafc;
+  --od-surface: #ffffff;
+  --od-surface2:#f1f5f9;
+  --od-border:  rgba(0,0,0,0.07);
+  --od-text:    #334155;
+  --od-muted:   #64748b;
+  --od-title:   #0f172a;
+}
+
+.od-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Back Link ── */
+.od-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--od-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+.od-back-link:hover {
+  color: var(--od-text);
+}
+
+.od-title {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  color: var(--od-title);
+  margin: 0 0 6px;
+}
+
+.od-subtitle {
+  font-size: 14px;
+  color: var(--od-muted);
+  margin: 0 0 36px;
+}
+
+/* ── Error Banner ── */
+.od-error-banner {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+/* ── Empty State ── */
+.od-empty-state {
+  background: var(--od-surface);
+  border: 1px solid var(--od-border);
+  border-radius: 24px;
+  padding: 60px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.od-empty-icon {
+  color: var(--od-muted);
+}
+.od-empty-state h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--od-title);
+  margin: 0;
+}
+.od-empty-state p {
+  color: var(--od-muted);
+  max-width: 420px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Order List & Cards ── */
+.od-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.od-card {
+  background: var(--od-surface);
+  border: 1px solid var(--od-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.od-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--od-surface2);
+  border-bottom: 1px solid var(--od-border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.od-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.od-id-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--od-muted);
+  letter-spacing: 0.05em;
+}
+
+.od-id-value {
+  font-size: 14px;
+  color: var(--od-accent2);
+  font-family: monospace;
+}
+
+.od-date {
+  font-size: 13px;
+  color: var(--od-muted);
+}
+.od-date::before {
+  content: "•";
+  margin-right: 8px;
+  color: var(--od-border);
+}
+
+/* ── Status Chips ── */
+.od-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.od-status-chip--pending,
+.od-status-chip--processing {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--od-yellow);
+}
+.od-status-chip--shipped {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--od-accent2);
+}
+.od-status-chip--delivered {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--od-green);
+}
+.od-status-chip--cancelled {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--od-red);
+}
+
+/* ── Card Body ── */
+.od-card-body {
+  padding: 24px;
+}
+
+.od-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--od-border);
+}
+
+.od-item-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.od-item-visual {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.od-item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.od-item-emoji {
+  font-size: 24px;
+}
+
+.od-item-details {
+  flex: 1;
+}
+
+.od-item-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--od-title);
+  margin: 0 0 4px;
+}
+
+.od-item-qty-price {
+  font-size: 12px;
+  color: var(--od-muted);
+}
+
+/* ── Summary & Shipping ── */
+.od-summary-section {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+.od-shipping-details h5 {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--od-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+}
+
+.od-shipping-details p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: var(--od-muted);
+  line-height: 1.4;
+}
+
+.od-shipping-details .od-recipient {
+  font-weight: 700;
+  color: var(--od-title);
+}
+
+.od-financials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--od-surface2);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--od-border);
+}
+
+.od-fin-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--od-muted);
+}
+.od-fin-row span:last-child {
+  font-weight: 600;
+  color: var(--od-title);
+}
+
+.od-divider {
+  height: 1px;
+  background: var(--od-border);
+  margin: 4px 0;
+}
+
+.od-fin-row--total {
+  font-size: 14px;
+  font-weight: 700;
+}
+.od-fin-row--total span:last-child {
+  color: var(--od-accent2);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* ── Button Primary ── */
+.od-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--od-accent), var(--od-accent2));
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+  transition: all 0.2s;
+}
+.od-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
+}
+
+/* ── Loading Spinner ── */
+.od-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.od-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: var(--od-accent2);
+  border-radius: 50%;
+  animation: odSpin 0.8s linear infinite;
+}
+@keyframes odSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .od-summary-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

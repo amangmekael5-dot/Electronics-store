@@ -1,0 +1,584 @@
+/* ────────────────────────────────────────────────────────────────────────────
+   CheckoutPage.css  —  ElecStore Checkout
+   ──────────────────────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+.ck-page, .ck-gate-page, .ck-gate, .ck-success {
+  --ck-bg:      #09090f;
+  --ck-surface: #12121c;
+  --ck-surface2:#1a1a28;
+  --ck-border:  rgba(255,255,255,0.07);
+  --ck-text:    #e2e4ef;
+  --ck-muted:   #7a7d9c;
+  --ck-accent:  #7c3aed;
+  --ck-accent2: #a855f7;
+  --ck-title:   #ffffff;
+  --ck-green:   #10b981;
+  --ck-red:     #ef4444;
+
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--ck-bg);
+  color: var(--ck-text);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+.ck-page {
+  padding: 40px 0 80px;
+}
+
+.light-mode .ck-page, .light-mode .ck-gate-page, .light-mode .ck-gate, .light-mode .ck-success {
+  --ck-bg:      #f8fafc;
+  --ck-surface: #ffffff;
+  --ck-surface2:#f1f5f9;
+  --ck-border:  rgba(0,0,0,0.07);
+  --ck-text:    #334155;
+  --ck-muted:   #64748b;
+  --ck-title:   #0f172a;
+  --ck-accent:  #7c3aed;
+  --ck-accent2: #a855f7;
+}
+
+.ck-container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+/* ── Header & Steps ────────────────────────────────────────────────────────── */
+.ck-header { margin-bottom: 36px; }
+.ck-back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ck-muted); text-decoration: none; font-size: 13px; font-weight: 600;
+  margin-bottom: 20px; transition: color 0.2s;
+}
+.ck-back-link:hover { color: var(--ck-text); }
+
+.ck-title { font-size: clamp(24px,4vw,36px); font-weight: 800; color: var(--ck-title); margin: 0 0 28px; }
+
+.ck-steps { display: flex; align-items: center; gap: 0; }
+.ck-step {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 600; color: var(--ck-muted);
+}
+.ck-step--active { color: var(--ck-accent2); }
+.ck-step--done { color: var(--ck-green); }
+
+.ck-step-dot {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; flex-shrink: 0;
+  transition: all 0.3s;
+}
+.ck-step--active .ck-step-dot { background: var(--ck-accent); border-color: var(--ck-accent); color: #fff; }
+.ck-step--done .ck-step-dot { background: var(--ck-green); border-color: var(--ck-green); color: #fff; }
+
+.ck-step-line {
+  width: 60px; height: 2px; background: var(--ck-border);
+  margin: 0 8px; flex-shrink: 0;
+}
+.ck-step--done + .ck-step .ck-step-line,
+.ck-step--done .ck-step-line + * { background: var(--ck-green); }
+
+/* ── Layout ────────────────────────────────────────────────────────────────── */
+.ck-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────────── */
+.ck-card {
+  background: var(--ck-surface);
+  border: 1px solid var(--ck-border);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+
+.ck-card-header {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 17px; font-weight: 800; color: var(--ck-title);
+  margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--ck-border);
+}
+
+/* ── Form Grid ─────────────────────────────────────────────────────────────── */
+.ck-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ck-field { display: flex; flex-direction: column; gap: 6px; }
+.ck-field span { font-size: 11px; font-weight: 700; color: var(--ck-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.ck-field--full { grid-column: 1 / -1; }
+
+.ck-input {
+  padding: 13px 16px;
+  background: var(--ck-surface2);
+  border: 1px solid var(--ck-border);
+  border-radius: 12px;
+  color: var(--ck-title);
+  font-size: 14px; font-family: inherit;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%; box-sizing: border-box;
+}
+.ck-input:focus { border-color: var(--ck-accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
+.ck-input::placeholder { color: var(--ck-muted); }
+.ck-input--mono { font-family: "Courier New", monospace; letter-spacing: 0.05em; }
+
+/* ── Ethiopian Payment Method Grid Selector ────────────────────────────────── */
+.ck-pay-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ck-pay-method-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--ck-surface2);
+  border: 2px solid var(--ck-border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+}
+
+.ck-pay-method-card:hover {
+  border-color: var(--ck-accent2);
+  transform: translateY(-2px);
+}
+
+.ck-pay-method-card--active {
+  border-color: var(--ck-accent);
+  background: rgba(124,58,237,0.1);
+  box-shadow: 0 6px 20px rgba(124,58,237,0.25);
+}
+
+.ck-pay-method-icon {
+  font-size: 20px;
+}
+
+.ck-pay-method-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ck-pay-method-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ck-title);
+}
+
+.ck-pay-method-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ck-muted);
+}
+
+/* ── Bank & QR Pay Box ─────────────────────────────────────────────────────── */
+.ck-bank-box {
+  background: var(--ck-surface2);
+  border: 1px solid var(--ck-border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ck-bank-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ck-border);
+}
+
+.ck-bank-header h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ck-title);
+  margin: 0 0 2px;
+}
+
+.ck-bank-header p {
+  font-size: 12px;
+  color: var(--ck-muted);
+  margin: 0;
+}
+
+.ck-bank-header.cbe { color: #8b5cf6; }
+.ck-bank-header.telebirr { color: #0080ff; }
+.ck-bank-header.boa { color: #f59e0b; }
+.ck-bank-header.awash { color: #10b981; }
+.ck-bank-header.qrcode { color: #a855f7; }
+
+/* ── Interactive QR Code Box ───────────────────────────────────────────────── */
+.ck-qr-box {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(0,0,0,0.25);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px dashed var(--ck-border);
+  flex-wrap: wrap;
+}
+
+.ck-qr-frame {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ck-qr-laser-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #7c3aed, #a855f7, transparent);
+  box-shadow: 0 0 12px #a855f7;
+  animation: qrLaser 2.2s ease-in-out infinite alternate;
+  z-index: 5;
+}
+
+@keyframes qrLaser {
+  0% { top: 0%; }
+  100% { top: 96%; }
+}
+
+.ck-qr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ck-qr-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.ck-qr-bank-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ck-accent2);
+}
+
+.ck-qr-acc-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ck-qr-acc-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.05em;
+}
+
+.ck-copy-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--ck-border);
+  color: var(--ck-text);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.ck-copy-btn:hover {
+  background: var(--ck-accent);
+  color: #fff;
+}
+
+.ck-qr-hint {
+  font-size: 12px;
+  color: var(--ck-muted);
+  margin: 4px 0 0;
+}
+
+/* ── Bank Info Grid ────────────────────────────────────────────────────────── */
+.ck-bank-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  background: rgba(255,255,255,0.02);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--ck-border);
+}
+
+.ck-info-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: var(--ck-muted);
+}
+
+.ck-info-item strong {
+  font-size: 13px;
+  color: var(--ck-title);
+  margin-top: 2px;
+}
+
+/* ── Card Preview ──────────────────────────────────────────────────────────── */
+.ck-card-form { }
+.ck-card-preview {
+  background: linear-gradient(135deg, #1a0533 0%, #3b1f6e 50%, #7c3aed 100%);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  min-height: 160px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 50px rgba(124,58,237,0.35);
+}
+.ck-card-preview::before {
+  content: ""; position: absolute;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  top: -60px; right: -60px;
+}
+
+.ck-card-chip {
+  width: 42px; height: 32px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-radius: 6px; margin-bottom: 24px;
+}
+
+.ck-card-num {
+  font-size: 20px; font-weight: 700; color: #fff;
+  letter-spacing: 0.15em; font-family: "Courier New", monospace;
+  margin-bottom: 20px;
+}
+
+.ck-card-bottom { display: flex; align-items: flex-end; gap: 24px; }
+.ck-card-label { font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
+.ck-card-val { font-size: 14px; font-weight: 700; color: #fff; margin-top: 2px; }
+.ck-card-brand-icon { margin-left: auto; color: rgba(255,255,255,0.9); }
+
+/* ── Alt Pay ───────────────────────────────────────────────────────────────── */
+.ck-alt-pay { display: flex; flex-direction: column; gap: 20px; }
+.ck-alt-pay-icon {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 22px; font-weight: 800; padding: 16px 24px;
+  border-radius: 14px; width: fit-content;
+}
+.ck-alt-pay-icon.paypal { background: rgba(0,112,240,0.1); color: #003087; }
+.light-mode .ck-alt-pay-icon.paypal { color: #009cde; }
+
+/* ── Secure note ───────────────────────────────────────────────────────────── */
+.ck-secure-note {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 24px; padding: 12px 16px;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 10px;
+  font-size: 12px; color: var(--ck-green); font-weight: 600;
+}
+
+/* ── Review Step ───────────────────────────────────────────────────────────── */
+.ck-review-section {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--ck-border);
+}
+.ck-review-section:last-child { border-bottom: none; }
+.ck-review-section h4 { font-size: 12px; font-weight: 700; color: var(--ck-muted); text-transform: uppercase; letter-spacing: 0.07em; margin: 0 0 10px; }
+.ck-review-section p { margin: 2px 0; font-size: 14px; color: var(--ck-text); }
+
+.ck-review-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+}
+.ck-review-emoji { font-size: 22px; }
+.ck-review-name  { flex: 1; font-size: 14px; font-weight: 600; color: var(--ck-title); }
+.ck-review-price { font-size: 14px; font-weight: 800; color: var(--ck-title); }
+
+/* ── Nav Buttons ───────────────────────────────────────────────────────────── */
+.ck-nav-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+
+.ck-btn-primary, .ck-btn-ghost, .ck-btn-pay {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 14px;
+  font-size: 15px; font-weight: 700; font-family: inherit;
+  cursor: pointer; border: none; transition: all 0.25s;
+  text-decoration: none;
+}
+.ck-btn-primary {
+  background: linear-gradient(135deg, var(--ck-accent, #7c3aed), var(--ck-accent2, #a855f7)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.ck-btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.6) !important;
+  color: #ffffff !important;
+}
+.ck-btn-ghost {
+  background: transparent; border: 1px solid var(--ck-border);
+  color: var(--ck-muted);
+}
+.ck-btn-ghost:hover { border-color: var(--ck-text); color: var(--ck-text); }
+.ck-btn-pay { padding: 16px 36px; font-size: 16px; }
+.ck-btn-pay--loading { cursor: wait; opacity: 0.8; }
+.ck-btn-pay:disabled { opacity: 0.7; }
+
+/* ── Error ─────────────────────────────────────────────────────────────────── */
+.ck-error {
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+  color: #f87171; padding: 12px 16px; border-radius: 12px;
+  font-size: 13px; font-weight: 600; margin-bottom: 20px;
+}
+
+/* ── Spinner ───────────────────────────────────────────────────────────────── */
+.ck-spinner {
+  width: 20px; height: 20px;
+  border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: ckSpin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes ckSpin { to { transform: rotate(360deg); } }
+
+/* ── Order Summary Sidebar ─────────────────────────────────────────────────── */
+.ck-summary {
+  background: var(--ck-surface); border: 1px solid var(--ck-border);
+  border-radius: 24px; padding: 28px;
+  position: sticky; top: 100px;
+}
+.ck-summary-title { font-size: 18px; font-weight: 800; color: var(--ck-title); margin: 0 0 20px; }
+
+.ck-summary-items { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; max-height: 280px; overflow-y: auto; }
+.ck-summary-item { display: flex; align-items: center; gap: 14px; }
+.ck-summary-visual {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px;
+}
+.ck-summary-meta { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ck-summary-name { font-size: 13px; font-weight: 700; color: var(--ck-title); line-height: 1.3; }
+.ck-summary-qty  { font-size: 11px; color: var(--ck-muted); }
+.ck-summary-price { font-size: 14px; font-weight: 800; color: var(--ck-title); }
+
+.ck-summary-rows { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--ck-border); padding-top: 16px; }
+.ck-summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--ck-muted); }
+.ck-summary-row span:last-child { font-weight: 700; color: var(--ck-title); }
+.ck-summary-divider { height: 1px; background: var(--ck-border); margin: 4px 0; }
+.ck-summary-row--total { font-size: 18px; font-weight: 900; color: var(--ck-title); }
+.ck-summary-row--total span:last-child { color: var(--ck-accent2); font-size: 22px; }
+
+.ck-summary-trust {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--ck-border);
+  font-size: 12px; color: var(--ck-muted);
+}
+.ck-summary-trust > div { display: flex; align-items: center; gap: 8px; }
+.ck-summary-trust svg { color: var(--ck-green); }
+
+/* ── Gate / Success screens ────────────────────────────────────────────────── */
+.ck-gate-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 20px;
+}
+
+.ck-gate, .ck-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  background: var(--ck-surface);
+  border: 1px solid var(--ck-border);
+  border-radius: 24px;
+  padding: 48px 36px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  color: var(--ck-text);
+  font-family: "Inter", sans-serif;
+}
+
+.light-mode .ck-gate, .light-mode .ck-success {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
+}
+
+.ck-gate-icon-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ck-accent2, #a855f7);
+  margin-bottom: 6px;
+}
+.light-mode .ck-gate-icon-circle {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.2);
+  color: #7c3aed;
+}
+
+.ck-gate svg, .ck-success svg { color: inherit; }
+.ck-gate h2, .ck-success h1 { font-size: 26px; font-weight: 800; color: var(--ck-title); margin: 0; letter-spacing: -0.5px; }
+.ck-gate p, .ck-success p { color: var(--ck-muted); margin: 0; font-size: 15px; line-height: 1.5; max-width: 380px; }
+
+.ck-gate .ck-btn-primary {
+  margin-top: 10px;
+  min-width: 160px;
+}
+
+.ck-success-icon { font-size: 72px; color: var(--ck-green); animation: ckPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes ckPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.ck-success-id {
+  background: var(--ck-surface2); border: 1px solid var(--ck-border);
+  padding: 12px 24px; border-radius: 12px; font-size: 13px; color: var(--ck-muted);
+}
+.ck-success-id span { font-weight: 800; color: var(--ck-accent2); font-family: "Courier New", monospace; }
+.ck-success-sub { font-size: 14px; }
+.ck-success-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ck-layout { grid-template-columns: 1fr; }
+  .ck-summary { position: static; }
+}
+@media (max-width: 600px) {
+  .ck-container { padding: 0 16px; }
+  .ck-card { padding: 20px; }
+  .ck-grid { grid-template-columns: 1fr; }
+  .ck-steps { gap: 4px; }
+  .ck-step-line { width: 24px; }
+  .ck-nav-btns { justify-content: stretch; }
+  .ck-btn-primary, .ck-btn-ghost, .ck-btn-pay { flex: 1; justify-content: center; }
+  .ck-qr-box { flex-direction: column; text-align: center; }
+  .ck-qr-acc-row { justify-content: center; }
+}
